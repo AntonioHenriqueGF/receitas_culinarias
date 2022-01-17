@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.form`
+    overflow: auto;
+
     h2 {
         color: var(--text-title);
         font-size: 1.5rem;
@@ -11,7 +13,7 @@ export const Container = styled.form`
     input {
         width: 100%;
         padding: 0 1.5rem;
-        height: 4rem;
+        height: 3rem;
         border-radius: 0.25rem;
 
         border: 1px solid #d7d7d7;
@@ -31,7 +33,7 @@ export const Container = styled.form`
 
     button[type=submit] {
         width: 100%;
-        height: 4rem;
+        height: 3rem;
         border-radius: 0.25rem;
         background-color: var(--red);
         color: #ffffff;
@@ -45,5 +47,21 @@ export const Container = styled.form`
         &:hover {
             filter: brightness(0.9);
         }
+    }
+
+    p {
+        margin: 0.3rem auto 0 auto;
+        text-align: center;
+        padding: 0.8rem 0;
+    }
+
+    div {
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    a {
+        color: var(--red);
     }
 `;

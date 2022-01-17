@@ -1,6 +1,6 @@
-import { HeaderProps } from "../index";
+import { HeaderProps } from "../Header";
 
-export function LoginMenu({ onOpenLoginModal }: HeaderProps) {
+export function LoginMenu({ onOpenLoginModal, onOpenSignInModal }: HeaderProps) {
     return (
         <ul className="header__nav">
             <li>
@@ -9,7 +9,7 @@ export function LoginMenu({ onOpenLoginModal }: HeaderProps) {
                 </button>
             </li>
             <li>
-                <button>
+                <button onClick={onOpenSignInModal}>
                 <span>Cadastro</span>
                 </button>
             </li>

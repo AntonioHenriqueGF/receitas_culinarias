@@ -1,12 +1,13 @@
 import logoSvg from "../../assets/soup512.png";
+import { UserMenu } from "../UserMenu";
 import { Container, Content } from "./styles";
-import { UserMenu } from "./UserMenu";
 
 export interface HeaderProps {
     onOpenLoginModal: () => void;
+    onOpenSignInModal: () => void;
 }
 
-export function Header({ onOpenLoginModal }: HeaderProps) {
+export function Header({ onOpenLoginModal, onOpenSignInModal }: HeaderProps) {
     return (
         <Container className="header">
             <Content>
@@ -17,7 +18,7 @@ export function Header({ onOpenLoginModal }: HeaderProps) {
                     </button>
                 </h1>
                 <nav>
-                    <UserMenu onOpenLoginModal={onOpenLoginModal} />
+                    <UserMenu onOpenLoginModal={onOpenLoginModal} onOpenSignInModal={onOpenSignInModal} />
                 </nav>
             </Content>
         </Container>
