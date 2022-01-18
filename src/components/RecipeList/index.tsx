@@ -7,7 +7,7 @@ import { RecipeItem } from '../RecipeItem';
 import { Container, ListHeader } from './styles';
 
 export function RecipeList( ) {
-    const { isAuthenticated } = useContext(AuthContext);
+    const { isAuthenticated, user } = useContext(AuthContext);
     const [recipes, setRecipes] = useState<Recipe[]>([]);
     const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
     const [isRecipeModalOpen, setIsRecipeModalOpen] = useState(false);
@@ -24,7 +24,6 @@ export function RecipeList( ) {
     }, [isAuthenticated]);
 
     useEffect(() => {
-        console.log(recipeQuery !== '');
         if (recipeQuery !== '') {
             const filteredRecipes = allRecipes.filter(recipe => recipe.nome.toLowerCase().includes(recipeQuery.toLowerCase()));
             setRecipes(filteredRecipes);
@@ -76,6 +75,7 @@ export function RecipeList( ) {
     return (
         <RecipesProvider>
             <Container>
+                <h1>Olá, {user?.nome}</h1>
                 <ListHeader>
                     <div>
                         <h2>Receitas</h2>

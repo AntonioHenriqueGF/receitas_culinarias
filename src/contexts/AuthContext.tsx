@@ -92,9 +92,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     async function signIn(credentials: SignInCredentials) {
         try {
-            await api.post('/users', credentials);
-
-            window.location.reload();
+            await api.post('/users', credentials).catch(error => {
+                alert(error.response.data.message);
+            });
+            await logIn(credentials);
         } catch (error) {
             console.log(error);
         }

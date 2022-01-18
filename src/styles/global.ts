@@ -75,9 +75,9 @@ export const GlobalStyle = createGlobalStyle`
         align-items: center;
         justify-content: center;
 
-        @media print {
+        /* @media print {
             position: static;
-        }
+        } */
 
     }
 
@@ -108,7 +108,34 @@ export const GlobalStyle = createGlobalStyle`
 
         @media print {
             position: static;
+            height: fit-content;
+            overflow: visible !important;
+            padding: 0;
+            max-width: none;
         }
+    }
+
+    .react-recipe-modal-overlay {
+        background-color: rgba(0, 0, 0, 0.5);
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        min-height: 550px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        visibility: visible !important;
+        overflow: visible !important;
+        @media print {
+            align-items: flex-start;
+        }
+
     }
 
     .react-modal-close {

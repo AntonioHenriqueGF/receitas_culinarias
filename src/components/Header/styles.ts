@@ -65,6 +65,10 @@ export const Content = styled.div`
         color: var(--text-light);
         text-decoration: none;
     }
+    
+    p {
+        margin-right: 1rem;
+    }
 
     button { 
         background: none;

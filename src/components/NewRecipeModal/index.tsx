@@ -29,8 +29,8 @@ export function NewRecipeModal({ isOpen, onRequestClose }: NewRecipeModalProps) 
     const [ nome, setNome ] = useState('');
     const [ ingredientes, setIngredientes ] = useState('');
     const [ modo_preparo, setModo_preparo ] = useState('');
-    const [ tempo_preparo_minutos, setTempo_preparo_minutos ] = useState<number>();
-    const [ porcoes, setPorcoes ] = useState<number>();
+    const [ tempo_preparo_minutos, setTempo_preparo_minutos ] = useState<number | undefined>();
+    const [ porcoes, setPorcoes ] = useState<number | undefined>();
     const [ id_categorias, setId_categorias ] = useState(0);
 
     async function handleNewRecipeSubmit(event: FormEvent) {
@@ -80,11 +80,21 @@ export function NewRecipeModal({ isOpen, onRequestClose }: NewRecipeModalProps) 
                 </div>
                 <div>
                     <label>Tempo de Preparo (minutos)</label>
-                    <input value={tempo_preparo_minutos} onChange={event => setTempo_preparo_minutos(Number(event.target.value))} type="number" min="0" placeholder="Tempo de Preparo" required />
+                    <input value={tempo_preparo_minutos} onChange={event => setTempo_preparo_minutos(() => {
+                        if (event.target.value === '') {
+                            return undefined;
+                        }
+                        return Number(event.target.value);
+                    })} type="number" min="0" placeholder="Tempo de Preparo" required />
                 </div>
                 <div>
                     <label>Porções</label>
-                    <input value={porcoes} onChange={event => setPorcoes(Number(event.target.value))} type="number" placeholder="Porções" min="0" required />
+                    <input value={porcoes} onChange={event => setPorcoes(() => {
+                        if (event.target.value === '') {
+                            return undefined;
+                        }
+                        return Number(event.target.value);
+                    })} type="number" placeholder="Porções" min="0" required />
                 </div>
                 <div>
                     <label>Categoria</label>
