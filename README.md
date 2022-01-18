@@ -1,4 +1,4 @@
-# Desafio RP Receitas Culinárias
+# Desafio RG Receitas Culinárias
 
 ### Frontend
 
