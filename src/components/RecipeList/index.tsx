@@ -1,16 +1,37 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
-import { Recipe, RecipesContext, RecipesProvider } from '../../contexts/RecipesContext';
+import { Recipe, RecipesProvider } from '../../contexts/RecipesContext';
 import { api } from '../../services/api';
 import { NewRecipeModal } from '../NewRecipeModal';
 import { RecipeItem } from '../RecipeItem';
 import { Container, ListHeader } from './styles';
 
 export function RecipeList( ) {
-    const [recipes, setRecipes] = useState<Recipe[]>([]);
     const { isAuthenticated } = useContext(AuthContext);
-    const { deleteRecipe } = useContext(RecipesContext);
+    const [recipes, setRecipes] = useState<Recipe[]>([]);
+    const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
     const [isRecipeModalOpen, setIsRecipeModalOpen] = useState(false);
+    const [recipeQuery, setRecipeQuery] = useState('');
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            api.get('/recipes').then(response => {
+                const { data } = response;
+                setRecipes(data);
+                setAllRecipes(data);
+            });
+        }
+    }, [isAuthenticated]);
+
+    useEffect(() => {
+        console.log(recipeQuery !== '');
+        if (recipeQuery !== '') {
+            const filteredRecipes = allRecipes.filter(recipe => recipe.nome.toLowerCase().includes(recipeQuery.toLowerCase()));
+            setRecipes(filteredRecipes);
+        } else {
+            setRecipes(allRecipes);
+        }
+    }, [allRecipes, recipeQuery])
 
     function handleOpenRecipeModal(){
         setIsRecipeModalOpen(true);
@@ -26,29 +47,17 @@ export function RecipeList( ) {
         setRecipes(data);
     }
 
-    useEffect(() => {
-        if (isAuthenticated) {
-            api.get('/recipes').then(response => {
-                const { data } = response;
-                setRecipes(data);
-            });
-        }
-    }, [isAuthenticated]);
-
     async function handleDeleteRecipe(id: number) {
-        await deleteRecipe(id);
-        // try {
-        //     await api.delete(`/recipes`, { data: { id } });
-        //     const response = await api.get('/recipes');
-        //     const { data } = response;
-        //     setRecipes(data);
-        // } catch (error) {
-        //     console.log(error);
-        // }
-    }
-
-    async function handleUpdateRecipe() {
-        
+        try {
+            await api.delete(`/recipes`, { data: { id } }).catch(error => {
+                alert(error.response.data.message);
+            });
+            const response = await api.get('/recipes');
+            const { data } = response;
+            setRecipes(data);
+        } catch (error) {
+            console.log(error);
+        }
     }
     
     if (!isAuthenticated) {
@@ -58,10 +67,10 @@ export function RecipeList( ) {
     function handleDisplayList(recipes: Recipe[]) {
         if (recipes.length !== 0) {
             return recipes.map(recipe => (
-                <RecipeItem key={recipe.id} recipe={recipe} onDeleteRecipe={handleDeleteRecipe} onUpdateRecipe={handleUpdateRecipe} />
+                <RecipeItem key={recipe.id} recipe={recipe} onDeleteRecipe={handleDeleteRecipe} />
             ));
         }
-        return (<div><p>Você ainda não possui receitas cadastradas!</p></div>)
+        return (<div><p>Nenhuma receita para mostrar...</p></div>)
     }
 
     return (
@@ -76,6 +85,7 @@ export function RecipeList( ) {
                         <button className='createItemButton' onClick={handleOpenRecipeModal}>Adicionar receita</button>
                     </div>
                 </ListHeader>
+                <input type="text" placeholder='Procurar receita...' value={recipeQuery} onChange={event => setRecipeQuery(event.target.value)} />
                 <ul>
                     {handleDisplayList(recipes)}
                 </ul>

@@ -7,7 +7,7 @@ export const Container = styled.div`
         align-items: center;
         justify-content: space-between;
         border: 1px solid #ddd;
-        padding: 1rem;
+        padding-right: 1rem;
 
         & + li {
             
@@ -26,6 +26,14 @@ export const ListMenu = styled.div`
 `;
 
 export const ListPanel = styled.div`
+
+    padding: 1rem;
+
+    &:hover {
+        cursor: pointer;
+        background-color: #ddd;
+    }
+
     p{
         color: var(--text-body);
     }

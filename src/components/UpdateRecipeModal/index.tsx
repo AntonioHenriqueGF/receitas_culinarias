@@ -1,10 +1,12 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Modal from "react-modal";
 import closeIcon from '../../assets/Close.svg';
+import { Recipe } from "../../contexts/RecipesContext";
 import { api } from "../../services/api";
-import { Container } from "./styles";
+import { Container } from "../NewRecipeModal/styles";
 
-interface NewRecipeModalProps {
+interface UpdateRecipeModalProps {
+    recipe: Recipe;
     isOpen: boolean;
     onRequestClose: () => void;
 }
@@ -25,7 +27,7 @@ interface NewRecipeModalProps {
  * 13 Alimentação Saudável 
  *  */
 
-export function NewRecipeModal({ isOpen, onRequestClose }: NewRecipeModalProps) {
+export function UpdateRecipeModal({ recipe, isOpen, onRequestClose }: UpdateRecipeModalProps) {
     const [ nome, setNome ] = useState('');
     const [ ingredientes, setIngredientes ] = useState('');
     const [ modo_preparo, setModo_preparo ] = useState('');
@@ -33,9 +35,20 @@ export function NewRecipeModal({ isOpen, onRequestClose }: NewRecipeModalProps) 
     const [ porcoes, setPorcoes ] = useState<number>();
     const [ id_categorias, setId_categorias ] = useState(0);
 
-    async function handleNewRecipeSubmit(event: FormEvent) {
+    useEffect(() => {
+        setNome(recipe.nome);
+        setIngredientes(recipe.ingredientes);
+        setModo_preparo(recipe.modo_preparo);
+        setTempo_preparo_minutos(recipe.tempo_preparo_minutos);
+        setPorcoes(recipe.porcoes);
+        setId_categorias(recipe.id_categorias);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isOpen])
+
+    async function handleUpdateRecipeSubmit(event: FormEvent) {
         event.preventDefault();
         const recipeData = {
+            id: recipe.id,
             id_categorias,
             nome,
             porcoes: Number(porcoes),
@@ -44,8 +57,7 @@ export function NewRecipeModal({ isOpen, onRequestClose }: NewRecipeModalProps) 
             tempo_preparo_minutos: Number(tempo_preparo_minutos),
         };
         try {
-
-            await api.post('/recipes', recipeData).then(() => {
+            await api.put('/recipes', recipeData).then(() => {
                 document.location.reload();
             }).catch(error => {
                 alert(error.response.data.message);
@@ -64,8 +76,8 @@ export function NewRecipeModal({ isOpen, onRequestClose }: NewRecipeModalProps) 
             <button type="button" onClick={onRequestClose} className="react-modal-close">
                 <img src={closeIcon} alt="Fechar modal" />
             </button>
-            <Container onSubmit={handleNewRecipeSubmit}>
-                <h2>Criar Receita</h2>
+            <Container onSubmit={handleUpdateRecipeSubmit}>
+                <h2>Editar Receita</h2>
                 <div>
                     <label>Nome</label>
                     <input value={nome} onChange={event => setNome(event.target.value)} type="text" required />
@@ -105,7 +117,7 @@ export function NewRecipeModal({ isOpen, onRequestClose }: NewRecipeModalProps) 
                         <option value={13}>Alimentação Saudável</option>
                     </select>
                 </div>
-                <button type="submit">Criar</button>
+                <button type="submit">Enviar</button>
             </Container>
         </Modal>
     )

@@ -44,7 +44,7 @@ type RecipesProviderProps = {
 export const RecipesContext = createContext({} as RecipesContextData);
 
 export function RecipesProvider({ children }: RecipesProviderProps) {
-    const [ recipes, setRecipes ] = useState<Recipe[]>();
+    const [ recipes, setRecipes ] = useState<Recipe[]>([]);
     const { isAuthenticated } = useContext(AuthContext);
 
     useEffect(() => {

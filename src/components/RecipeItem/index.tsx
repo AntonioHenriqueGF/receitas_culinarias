@@ -1,23 +1,32 @@
 import { useState } from "react";
 import { Recipe } from "../../contexts/RecipesContext";
+import { UpdateRecipeModal } from "../UpdateRecipeModal";
 import { ViewRecipeModal } from "../ViewRecipeModal";
 import { Container, ListMenu, ListPanel } from "./styles";
 
 interface IRecipeItemProps {
     recipe: Recipe;
-    onUpdateRecipe: () => Promise<void>;
     onDeleteRecipe: (id: number) => Promise<void>;
 }
 
-export function RecipeItem({ recipe, onUpdateRecipe, onDeleteRecipe }: IRecipeItemProps) {
-    const [isOpen, setIsOpen] = useState(false);
+export function RecipeItem({ recipe, onDeleteRecipe }: IRecipeItemProps) {
+    const [isViewRecipeModalOpen, setIsViewRecipeModalOpen] = useState(false);
+    const [isUpdateRecipeModalOpen, setIsUpdateRecipeModalOpen] = useState(false);
 
     function handleOpenModal() {
-        setIsOpen(true);
+        setIsViewRecipeModalOpen(true);
     }
 
     function handleCloseModal() {
-        setIsOpen(false);
+        setIsViewRecipeModalOpen(false);
+    }
+
+    function handleOpenUpdateModal() {
+        setIsUpdateRecipeModalOpen(true);
+    }
+
+    function handleCloseUpdateModal() {
+        setIsUpdateRecipeModalOpen(false);
     }
     
     return (
@@ -28,11 +37,12 @@ export function RecipeItem({ recipe, onUpdateRecipe, onDeleteRecipe }: IRecipeIt
                     <p>{recipe.categoria.nome}, {recipe.porcoes} porções</p>
                 </ListPanel>
                 <ListMenu>
-                    <button className="updateItemButton" onClick={onUpdateRecipe}>Editar</button>
+                    <button className="updateItemButton" onClick={handleOpenUpdateModal}>Editar</button>
                     <button className="deleteItemButton" onClick={() => onDeleteRecipe(recipe.id)}>Remover</button>
                 </ListMenu>
             </li>
-            <ViewRecipeModal recipe={recipe} isOpen={isOpen} onRequestClose={handleCloseModal}/>
+            <ViewRecipeModal recipe={recipe} isOpen={isViewRecipeModalOpen} onRequestClose={handleCloseModal}/>
+            <UpdateRecipeModal recipe={recipe} isOpen={isUpdateRecipeModalOpen} onRequestClose={handleCloseUpdateModal}/>
         </Container>
     );
 }

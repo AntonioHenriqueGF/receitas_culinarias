@@ -22,6 +22,29 @@ export const Container = styled.div`
         border: 1px solid #bbb;
         list-style: none;
     }
+
+    input {
+        width: 90%;
+        max-width: 45rem;
+        margin-bottom: 1rem;
+        position: relative;
+        border-radius: 0.25rem;
+        
+
+        padding: 0 1.5rem;
+        height: 3rem;
+
+        border: 1px solid #d7d7d7;
+        background-color: #e7e9ee;
+
+        font-weight: 400;
+        font-size: 1rem;
+
+
+        &::placeholder {
+            color: var(--text-body);
+        }
+    }
 `
 
 export const ListHeader = styled.div`

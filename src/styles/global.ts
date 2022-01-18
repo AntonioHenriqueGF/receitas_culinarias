@@ -51,6 +51,10 @@ export const GlobalStyle = createGlobalStyle`
 
     button {
         cursor: pointer;
+
+        &:hover {
+            filter: brightness(0.9);
+        }
     }
 
     [disabled] {
@@ -62,7 +66,6 @@ export const GlobalStyle = createGlobalStyle`
         background-color: rgba(0, 0, 0, 0.5);
 
         position: fixed;
-        overflow-y:scroll;
         top: 0;
         left: 0;
         right: 0;
@@ -72,7 +75,9 @@ export const GlobalStyle = createGlobalStyle`
         align-items: center;
         justify-content: center;
 
-
+        @media print {
+            position: static;
+        }
 
     }
 
@@ -83,6 +88,27 @@ export const GlobalStyle = createGlobalStyle`
         padding: 3rem;
         position: relative;
         border-radius: 0.25rem;
+    }
+
+    @media print {
+        button {
+            display: none;
+        }
+    }
+
+    .react-recipe-modal-content {
+        width: 100%;
+        max-width: 80rem;
+        height: 95%;
+        background-color: var(--background);
+        padding: 3rem;
+        position: fixed;
+        overflow: auto;
+        border-radius: 0.25rem;
+
+        @media print {
+            position: static;
+        }
     }
 
     .react-modal-close {
