@@ -14,7 +14,7 @@ export function Header({ onOpenLoginModal, onOpenSignInModal }: HeaderProps) {
                 <h1>
                     <button>
                         <img src={logoSvg} alt="Logo" />
-                        <p><strong>RP</strong>Cook</p>
+                        <p><strong>RG</strong>Cook</p>
                     </button>
                 </h1>
                 <nav>
