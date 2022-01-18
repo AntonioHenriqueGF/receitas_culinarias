@@ -1,4 +1,4 @@
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useContext, useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { AuthContext } from '../../contexts/AuthContext';
 import closeIcon from '../../assets/Close.svg';
@@ -16,9 +16,10 @@ export function NewUserModal({ isOpen, onRequestClose }: NewUserModalProps) {
     const [ repetirSenha, setRepetirSenha ] = useState('');
     const { signIn, isAuthenticated } = useContext(AuthContext);
 
-    if (isAuthenticated) {
+    useEffect(() => {
         onRequestClose();
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAuthenticated]);
 
     async function handleSignInSubmit(event: FormEvent) {
         event.preventDefault();
@@ -43,10 +44,10 @@ export function NewUserModal({ isOpen, onRequestClose }: NewUserModalProps) {
             </button>
             <Container onSubmit={handleSignInSubmit}>
                 <h2>Cadastro</h2>
-                <input type="text" placeholder="Login" value={login} onChange={event => setLogin(event.target.value)}/>
-                <input type="text" placeholder="Nome" value={nome} onChange={event => setNome(event.target.value)}/>
-                <input type="password" placeholder="Senha" value={senha} onChange={event => setSenha(event.target.value)}/>
-                <input type="password" placeholder="Repetir senha" value={repetirSenha} onChange={event => setRepetirSenha(event.target.value)}/>
+                <input type="text" placeholder="Login" value={login} onChange={event => setLogin(event.target.value)} required />
+                <input type="text" placeholder="Nome" value={nome} onChange={event => setNome(event.target.value)} required />
+                <input type="password" placeholder="Senha" value={senha} onChange={event => setSenha(event.target.value)} required />
+                <input type="password" placeholder="Repetir senha" value={repetirSenha} onChange={event => setRepetirSenha(event.target.value)} required />
                 <button type="submit">Cadastrar</button>
                 <p>OU</p>
                 <div>

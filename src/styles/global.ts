@@ -7,8 +7,8 @@ export const GlobalStyle = createGlobalStyle`
 
         --blue-light: #6933ff;
 
-        --text-title: #363f5f;
-        --text-body: #969cb3;
+        --text-title: #333;
+        --text-body: #445;
 
         --text-light: #f0f2fb;
 
@@ -40,7 +40,7 @@ export const GlobalStyle = createGlobalStyle`
         -webkit-font-smoothing: antialiased;
     }
 
-    body, input, textarea, button {
+    body, input, select, option, textarea, button {
         font-family: 'Poppins', sans-serif;
         font-weight: 400;
     }
@@ -62,6 +62,7 @@ export const GlobalStyle = createGlobalStyle`
         background-color: rgba(0, 0, 0, 0.5);
 
         position: fixed;
+        overflow-y:scroll;
         top: 0;
         left: 0;
         right: 0;
@@ -70,6 +71,9 @@ export const GlobalStyle = createGlobalStyle`
         display: flex;
         align-items: center;
         justify-content: center;
+
+
+
     }
 
     .react-modal-content {
@@ -94,5 +98,38 @@ export const GlobalStyle = createGlobalStyle`
             cursor: pointer;
             filter: brightness(0.8);
         }
+    }
+
+    .createItemButton {
+        background-color: var(--blue-light);
+        color: var(--text-light);
+        border: none;
+        border-radius: 0.25rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .updateItemButton {
+        background-color: #ED8936;
+        color: var(--text-light);
+        border: none;
+        border-radius: 0.25rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .deleteItemButton {
+        background-color: var(--red);
+        color: var(--text-light);
+        border: none;
+        border-radius: 0.25rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .refreshListButton {
+        background-color: var(--text-light);
+        color: #333;
+        border: none;
+        border-radius: 0.25rem;
+        padding: 0.5rem 1rem;
+        margin-right: 1rem;
     }
 `

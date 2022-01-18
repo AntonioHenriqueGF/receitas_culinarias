@@ -5,6 +5,7 @@ import { NewUserModal } from "./components/NewUserModal";
 import { NewLoginModal } from "./components/NewLoginModal";
 import { AuthProvider } from "./contexts/AuthContext";
 import { GlobalStyle } from './styles/global';
+import { RecipeList } from "./components/RecipeList";
 
 Modal.setAppElement('#root');
 
@@ -31,6 +32,8 @@ export function App() {
   return (
     <AuthProvider>
       <Header onOpenLoginModal={handleOpenLoginModal} onOpenSignInModal={handleOpenSignInModal}/>
+
+      <RecipeList />
 
       <NewLoginModal isOpen={isLoginModalOpen} onRequestClose={handleCloseLoginModal} />
 

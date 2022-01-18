@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { parseCookies, setCookie } from 'nookies'
 import { api } from "../services/api";
+import { Recipe } from "./RecipesContext";
 
 export type LogInCredentials = {
     login: string;
@@ -25,26 +26,7 @@ type AuthProviderProps = {
     children: ReactNode;
 }
 
-type Category = {
-    id: number;
-    nome: string;
-}
-
-type Recipe = {
-    id: number;
-    id_usuarios: number;
-    id_categorias: number;
-    nome: string;
-    tempo_preparo_minutos: number;
-    porcoes: number;
-    modo_preparo: string;
-    ingredientes: string;
-    criado_em: Date;
-    alterado_em: Date;
-    categoria: Category;
-}
-
-type User = {
+export type User = {
     id: string;
     nome: string;
     login: string;
@@ -55,8 +37,17 @@ type User = {
 export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-    const [user, setUser] = useState<User>();
+    const [ user, setUser ] = useState<User>();
+    const [ recipes, setRecipes ] = useState<Recipe[]>();
     const isAuthenticated = !!user;
+
+    useEffect(() => {
+        api.get('/recipes').then(response => {
+            const { data } = response;
+            setRecipes(data);
+        });
+    }, [])
+
 
     useEffect(() => {
         const { 'rpcook.token': token } = parseCookies();
@@ -68,39 +59,42 @@ export function AuthProvider({ children }: AuthProviderProps) {
                     id: data.id,
                     nome: data.nome,
                     login: data.login,
-                    token: token
+                    token: token,
+                    recipes: recipes
                 });
             });
-
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    // console.log(user);
+
     async function logIn(credentials: LogInCredentials) {
-        try {      
-            
-            const { data } = await api.post('/sessions', credentials);
-
+        await api.post('/sessions', credentials).then(response => {
+            const { data } = response;
             setUser({
-                id: data.user.id,
-                nome: data.user.nome,
-                login: data.user.login,
-                token: data.token
+                id: data.id,
+                nome: data.nome,
+                login: data.login,
+                token: data.token,
+                recipes: recipes
             });
-
             setCookie(undefined, 'rpcook.token', data.token, {
-                maxAge: 30 * 24 * 60 * 60,
+                maxAge: 60 * 60 * 24,
                 path: '/',
             });
-
             api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
-        } catch (error) {
-            console.log(error);
-        }
+            window.location.reload();
+        }).catch(error => {
+            alert(error.response.data.message);
+        });;
     }
 
     async function signIn(credentials: SignInCredentials) {
         try {
             await api.post('/users', credentials);
+
+            window.location.reload();
         } catch (error) {
             console.log(error);
         }
@@ -113,6 +107,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
             maxAge: 0,
             path: '/',
         });
+
+        window.location.reload();
     }
 
     return (

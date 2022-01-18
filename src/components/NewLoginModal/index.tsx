@@ -1,4 +1,4 @@
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useContext, useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import closeIcon from '../../assets/Close.svg';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -14,9 +14,10 @@ export function NewLoginModal({ isOpen, onRequestClose }: NewLoginModalProps) {
     const [ senha, setSenha ] = useState('');
     const { logIn, isAuthenticated } = useContext(AuthContext);
 
-    if (isAuthenticated) {
+    useEffect(() => {
         onRequestClose();
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAuthenticated]);
 
     async function handleLoginSubmit(event: FormEvent) {
         event.preventDefault();
@@ -36,8 +37,8 @@ export function NewLoginModal({ isOpen, onRequestClose }: NewLoginModalProps) {
             </button>
             <Container onSubmit={handleLoginSubmit}>
                 <h2>Login</h2>
-                <input type="text" placeholder="Login" value={login} onChange={event => setLogin(event.target.value)}/>
-                <input type="password" placeholder="Senha" value={senha} onChange={event => setSenha(event.target.value)}/>
+                <input type="text" placeholder="Login" value={login} onChange={event => setLogin(event.target.value)} required />
+                <input type="password" placeholder="Senha" value={senha} onChange={event => setSenha(event.target.value)} required />
                 <button type="submit">Entrar</button>
                 <p>OU</p>
                 <div>

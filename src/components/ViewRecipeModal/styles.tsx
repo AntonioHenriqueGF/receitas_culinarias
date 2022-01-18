@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.form`
+export const Container = styled.div`
     h2 {
         color: var(--text-title);
         font-size: 1.5rem;
@@ -8,7 +8,17 @@ export const Container = styled.form`
         margin-bottom: 2rem;
     }
 
-    input, select, textarea {
+    div {
+        display: flex;
+        flex-direction: column;
+        margin: 2rem;
+
+        & + div {
+            margin-top: 3rem;
+        }
+    }
+
+    div>input, select, textarea {
         width: 100%;
         padding: 0 1.5rem;
         height: 3rem;
@@ -57,12 +67,6 @@ export const Container = styled.form`
         margin: 0.3rem auto 0 auto;
         text-align: center;
         padding: 0.8rem 0;
-    }
-
-    div {
-        display: flex;
-        justify-content: center;
-        margin: 0 auto;
     }
 
     a {
