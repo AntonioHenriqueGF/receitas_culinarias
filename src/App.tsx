@@ -6,6 +6,8 @@ import { NewLoginModal } from "./components/NewLoginModal";
 import { AuthProvider } from "./contexts/AuthContext";
 import { GlobalStyle } from './styles/global';
 import { RecipeList } from "./components/RecipeList";
+import { ChakraProvider } from '@chakra-ui/react'
+import { theme } from "./styles/theme";
 
 Modal.setAppElement('#root');
 
@@ -30,16 +32,18 @@ export function App() {
   }
 
   return (
-    <AuthProvider>
-      <Header onOpenLoginModal={handleOpenLoginModal} onOpenSignInModal={handleOpenSignInModal}/>
+    <ChakraProvider theme={theme}>
+      <AuthProvider>
+        <Header onOpenLoginModal={handleOpenLoginModal} onOpenSignInModal={handleOpenSignInModal}/>
 
-      <RecipeList />
+        <RecipeList />
 
-      <NewLoginModal isOpen={isLoginModalOpen} onRequestClose={handleCloseLoginModal} />
+        <NewLoginModal isOpen={isLoginModalOpen} onRequestClose={handleCloseLoginModal} />
 
-      <NewUserModal isOpen={isSignInModalOpen} onRequestClose={handleCloseSignInModal} />
-      
-      <GlobalStyle />
-    </AuthProvider>
+        <NewUserModal isOpen={isSignInModalOpen} onRequestClose={handleCloseSignInModal} />
+        
+        <GlobalStyle />
+      </AuthProvider>
+    </ChakraProvider>
   );
 }

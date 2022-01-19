@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.form`
+
     h2 {
         color: var(--text-title);
         font-size: 1.5rem;
@@ -8,17 +9,7 @@ export const Container = styled.form`
         margin-bottom: 2rem;
     }
 
-    div {
-        display: flex;
-        flex-direction: column;
-        margin: 2rem;
-
-        & + div {
-            margin-top: 3rem;
-        }
-    }
-
-    div>input, select, textarea {
+    input, select, textarea {
         width: 100%;
         padding: 0 1.5rem;
         height: 3rem;
@@ -33,10 +24,6 @@ export const Container = styled.form`
 
         &::placeholder {
             color: var(--text-body);
-        }
-
-        & + input, & + select, & + textarea {
-            margin-top: 1.5rem;
         }
     }
 

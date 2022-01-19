@@ -2,6 +2,7 @@ import { FormEvent, useContext, useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import closeIcon from '../../assets/Close.svg';
 import { AuthContext } from '../../contexts/AuthContext';
+import { Input } from '../../shared/components/Input';
 import { Container } from './styles';
 
 interface NewLoginModalProps {
@@ -36,14 +37,9 @@ export function NewLoginModal({ isOpen, onRequestClose }: NewLoginModalProps) {
                 <img src={closeIcon} alt="Fechar modal" />
             </button>
             <Container onSubmit={handleLoginSubmit}>
-                <h2>Login</h2>
-                <input type="text" placeholder="Login" value={login} onChange={event => setLogin(event.target.value)} required />
-                <input type="password" placeholder="Senha" value={senha} onChange={event => setSenha(event.target.value)} required />
+                <Input name="login" type="text" label="Login" value={login} onChange={event => setLogin(event.target.value)} required />
+                <Input name="senha" label="Senha" type="password" value={senha} onChange={event => setSenha(event.target.value)} required />
                 <button type="submit">Entrar</button>
-                <p>OU</p>
-                <div>
-                    <a href="/#">Criar uma nova conta</a>
-                </div>
             </Container>
         </Modal>
     )

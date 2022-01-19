@@ -74,11 +74,6 @@ export const GlobalStyle = createGlobalStyle`
         display: flex;
         align-items: center;
         justify-content: center;
-
-        /* @media print {
-            position: static;
-        } */
-
     }
 
     .react-modal-content {
@@ -86,7 +81,19 @@ export const GlobalStyle = createGlobalStyle`
         max-width: 576px;
         background-color: var(--background);
         padding: 3rem;
-        position: relative;
+        position: fixed;
+        overflow: auto;
+        border-radius: 0.25rem;
+    }
+
+    .react-signin-modal-content {
+        width: 100%;
+        max-width: 576px;
+        height: 95%;
+        background-color: var(--background);
+        padding: 3rem;
+        position: fixed;
+        overflow: auto;
         border-radius: 0.25rem;
     }
 
@@ -98,7 +105,7 @@ export const GlobalStyle = createGlobalStyle`
 
     .react-recipe-modal-content {
         width: 100%;
-        max-width: 80rem;
+        max-width: 70rem;
         height: 95%;
         background-color: var(--background);
         padding: 3rem;
@@ -118,7 +125,7 @@ export const GlobalStyle = createGlobalStyle`
     .react-recipe-modal-overlay {
         background-color: rgba(0, 0, 0, 0.5);
 
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         right: 0;
@@ -130,9 +137,10 @@ export const GlobalStyle = createGlobalStyle`
         align-items: center;
         justify-content: center;
 
-        visibility: visible !important;
-        overflow: visible !important;
         @media print {
+            position: absolute;
+            visibility: visible !important;
+            overflow: visible !important;
             align-items: flex-start;
         }
 
@@ -184,5 +192,14 @@ export const GlobalStyle = createGlobalStyle`
         border-radius: 0.25rem;
         padding: 0.5rem 1rem;
         margin-right: 1rem;
+    }
+
+    .form-control {
+        border: none;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 1rem 0;
     }
 `

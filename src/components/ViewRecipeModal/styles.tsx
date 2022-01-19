@@ -38,10 +38,6 @@ export const Container = styled.div`
         font-weight: 600;
         margin-bottom: 1.5rem;
     }
-
-    /* @media print {
-        background: var(--red)
-    } */
 `;
 
 export const ModalHeader = styled.div`
@@ -60,5 +56,6 @@ export const ModalHeader = styled.div`
         margin-bottom: 3rem;
         margin-top: 1rem;
         padding: 0 2rem;
+        border: 1px solid var(--text-body);
     }
 `;
