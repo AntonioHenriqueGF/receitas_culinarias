@@ -45,13 +45,22 @@ export const Container = styled.div`
             color: var(--text-body);
         }
     }
+
+    h1 {
+        color: var(--text-title);
+        font-size: 3rem;
+        font-weight: 600;
+        font-family: 'Roboto', sans-serif;
+    }
 `
 
 export const ListHeader = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 90%;
     max-width: 45rem;
+    margin-top: 2rem;
 
     h2 {
         text-align: left;

@@ -31,10 +31,12 @@ export type Recipe = {
 
 type RecipesContextData = {
     recipes?: Recipe[];
+    categories?: Category[];
     getRecipes(): Promise<Recipe[]>;
     createRecipe(recipe: ICreateRecipe): Promise<Recipe[]>;
     updateRecipe(recipe: Recipe): Promise<void>;
     deleteRecipe(id: number): Promise<void>;
+    getCategories(): Promise<Category[]>;
 }
 
 type RecipesProviderProps = {
@@ -45,6 +47,7 @@ export const RecipesContext = createContext({} as RecipesContextData);
 
 export function RecipesProvider({ children }: RecipesProviderProps) {
     const [ recipes, setRecipes ] = useState<Recipe[]>([]);
+    const [ categories, setCategories ] = useState<Category[]>([]);
     const { isAuthenticated } = useContext(AuthContext);
 
     useEffect(() => {
@@ -89,7 +92,6 @@ export function RecipesProvider({ children }: RecipesProviderProps) {
 
     async function deleteRecipe(id: number): Promise<void> {
         try {
-            console.log(id);
             await api.delete(`/recipes`, { data: { id } });
             const response = await api.get('/recipes');
             const { data } = response;
@@ -99,8 +101,19 @@ export function RecipesProvider({ children }: RecipesProviderProps) {
         }
     }
 
+    async function getCategories(): Promise<Category[]> {
+        try {
+            const response = await api.get('/recipes/categories');
+            const { data } = response;
+            setCategories(data);
+            return data;
+        } catch (error) {
+            return [];
+        }
+    }
+
     return (
-        <RecipesContext.Provider value={{ recipes, getRecipes, createRecipe, updateRecipe, deleteRecipe}}>
+        <RecipesContext.Provider value={{ recipes, categories, getRecipes, createRecipe, updateRecipe, deleteRecipe, getCategories}}>
             {children}
         </RecipesContext.Provider>
     )
